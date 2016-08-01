@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+     
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<title>Survey Form Page</title>
+
+</h:head>
+
+<h:body>
+
+<h:link value="MainPage" outcome="MainClassPage"></h:link>
+
+<h:form>
+
+<h1 align = "center" >Department of Computer Science</h1>
+<h1 align = "center" >Survey Form</h1>
+<h1 align = "center" >Please fill out the Survey Form to help us improve our service</h1>
+
+
+
+<h:panelGrid columns="4">
+
+	<h:outputLabel value="Firstname" />
+    <p:inputText id="FirstName" value="#{studentDetails.firstName}"  
+                 required="true" 
+                 requiredMessage="Enter First Name"
+                 validatorMessage="Enter only alphabets and should be less than 15 characters.">
+     <f:validateRegex pattern="[a-zA-Z ]*"/>                       
+     <f:validateLength maximum="15"/></p:inputText>
+     <h:message for= "FirstName" /><br />
+
+	<h:outputLabel  value="Lastname:" />
+    <p:inputText id="LastName" value="#{studentDetails.lastName}"  
+                 required="true" 
+                 requiredMessage="Enter Last Name"
+                 validatorMessage="Enter only alphabets and should be less than 15 characters.">
+     <f:validateRegex pattern="[a-zA-Z ]*"/>                       
+     <f:validateLength maximum="15"/></p:inputText>
+     <h:message for= "LastName" /><br />
+  
+
+    <h:outputLabel value="StreetAddress:" />
+    <p:inputText  id="StreetAddress" value="#{studentDetails.address}"  
+                  required="true"  
+                  requiredMessage="Enter Address" 
+                  validatorMessage = "Enter only alphabets and numbers and should be less than or equal to 30 characters.">
+     <f:validateRegex pattern="[a-zA-Z0-9 ]*"/>
+     <f:validateLength maximum="30"/></p:inputText>
+      <h:message for= "StreetAddress"/><br />
+
+
+    <h:outputLabel id="zipLabel" for="zip" value="Zip" />
+    <p:inputText  id="zip"
+                  value="#{studentDetails.zip}" 
+                  required="true" 
+                  requiredMessage="Enter the Zip Code" 
+                  validatorMessage = "Zip code must be number and exactly 5 digits">
+         <f:ajax event="keyup" render="city state"/>
+         <f:validateLength minimum="5" maximum="5"/></p:inputText>
+         <h:message for= "zip"/><br />
+
+    <h:outputLabel id="cityLabel" for="city" value="City" />
+    <p:inputText  id="city" 
+                  value="#{studentDetails.city}" 
+                  required="true" 
+                  requiredMessage="Enter the City" 
+                  validatorMessage = "Enter only alphabets and numbers and should be less than or equal to 30 characters.">
+     <f:validateLength maximum="30"/></p:inputText>
+     <h:message for= "city"  /><br />
+
+
+    <h:outputLabel id="stateLabel" for="state" value="State" />
+    <p:inputText  id="state"
+     			  value="#{studentDetails.state}" 
+                  required="true" 
+                  requiredMessage="Enter the State" 
+                  validatorMessage = "Enter only alphabets and numbers and should be less than or equal to 30 characters.">
+     <f:validateLength maximum="30"/></p:inputText>
+     <h:message for= "state" /><br />
+
+    <h:outputLabel id="TelePhone" value="Telephone:" />
+    <p:inputMask id="TelePhoneMask" value="#{studentDetails.telephone}"
+				  mask="(999) 999-9999"
+				  required="true" 
+				  requiredMessage="Enter telephone number" 
+				  validatorMessage="Telephone must be in given pattern" />
+				  <h:message for= "TelePhoneMask" /><br />
+
+    <h:outputLabel value="Email:" />
+    <p:inputText id="Email"  value ="#{studentDetails.email}" 
+ 				  required="true" 
+ 				  requiredMessage="Enter E-mail" 
+ 				  validatorMessage="Enter in the proper format" >
+    <f:validateRegex pattern="[a-zA-Z0-9._]*@[a-zA-Z0-9.]*.[a-zA-Z0-9]*" /></p:inputText>
+    <h:message for= "Email" /><br />
+    
+    <h:outputLabel value="How likely will you recommend George Mason University to others?"/>
+    <p:autoComplete id = "likely" value="#{studentDetails.likelihood}"
+				completeMethod="#{studentDetails.dropdownList}" 
+				forceSelection="true"
+				required="true" 
+				requiredMessage="Select one option"/>
+				<h:message for= "likely"  /><br />
+
+    <h:outputLabel value="Date:" />
+    <p:calendar  id = "eddate" value ="#{studentDetails.date}"  
+				  required="true"
+				  requiredMessage="Enter date of survey" />
+				  <h:message for= "eddate" /><br />        
+
+	<h:outputLabel value="StartDate:" />
+	<p:calendar id = "stdate" value="#{studentDetails.startDate}" 
+			            required="true"
+				        requiredMessage="Start date required" />
+				        <h:message for= "stdate" /><br />
+
+  	<h:outputLabel value="How did you hear about the George Mason University?"/>
+    <p:selectOneRadio id= "rdButton" value="#{studentDetails.knowAbout}" 
+ 				  required="true" 
+ 				  requiredMessage="You have to tell us how did you come to know about George Mason University?">
+       <f:selectItem itemValue="friends" itemLabel="Friends" />
+       <f:selectItem itemValue="television" itemLabel="Television" />  
+       <f:selectItem itemValue="internet" itemLabel="Internet" /> 
+       <f:selectItem itemValue="other" itemLabel="Other" />       
+    </p:selectOneRadio>
+    <h:message for= "rdButton" /><br />
+
+    
+	<h:outputLabel value="Please provide additional comments if any: "/>
+    <p:inputText id="comment" value="#{studentDetails.comments}" 
+       			   required="true" 
+       			   requiredMessage="Please enter your comments"/>
+       		  <h:message for="comment" /><br />
+
+    <h:outputLabel value="Raffle:"/>
+    <p:inputText id="raff" value="#{studentDetails.raffle}" 
+              validatorMessage="Enter raffle data" 
+              required="true" 
+              requiredMessage="You should enter raffle data"></p:inputText>
+               <h:message for="raff" /><br /><br /><br />
+
+<h:commandButton action="#{studentDetails.showData}"  value="Submit"/><br /><br />
+
+</h:panelGrid>
+
+</h:form>
+</h:body>
+</html>
+
